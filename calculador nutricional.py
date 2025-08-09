@@ -93,31 +93,29 @@ def imprimir_orden(columna):
     print(datos)
     conexion.commit()
     conexion.close()
-def buscar():
+def buscar(instruccion):
     conexion = sqlite3.connect(base_datos)
     cursor = conexion.cursor()
-    instruccion = f"SELECT * FROM pacientes WHERE nombre like 'JU%'"
+    #instruccion = f"SELECT * FROM pacientes WHERE '{field}' like '{new}'"
     cursor.execute(instruccion)
     datos = cursor.fetchall()
     print(datos)
     conexion.commit()
     conexion.close()
-def actualizar():
+def actualizar(field, new, new2):
     conexion = sqlite3.connect(base_datos)
     cursor = conexion.cursor()
-    instruccion = f"UPDATE pacientes SET diagnostico='NULL' WHERE nombre like 'JU%'"
+    instruccion = f"UPDATE pacientes SET '{field}'='{new}' WHERE id = '{new2}'"
     cursor.execute(instruccion)
-    ins2 = f"SELECT * FROM pacientes"
-    cursor.execute(ins2)
-    datos = cursor.fetchall()
-    print(datos)
+    print(f'Datos actualizados con exito\n')
     conexion.commit()
     conexion.close()
-def borrar():
+def borrar(new):
     conexion = sqlite3.connect(base_datos)
     cursor = conexion.cursor()
-    instruccion = f"DELETE FROM pacientes WHERE apellido like 'PER%'"
+    instruccion = f"DELETE FROM pacientes WHERE id = '{new}'"
     cursor.execute(instruccion)
+    print(f'Paciente eliminado con exito de la base de datos\n')
     conexion.commit()
     conexion.close()
 
@@ -164,27 +162,56 @@ class CMR():
         elif elegido == 2:
             cargar_datos(paciente)
         elif elegido == 3:
-            pass
+            campo = (input(f'Ingrese el campo que desea actualizar\n')).lower()
+            campo2 = int(input(f'Ingrese el ID del paciente\n'))
+            if campo == 'apellido':
+                valor = input(f'Ingrese el nuevo valor para el campo {campo} selecionado\n')
+                actualizar(campo, valor, campo2)
+            elif campo == 'nombre':
+                valor = input(f'Ingrese el nuevo valor para el campo {campo} selecionado\n')
+                actualizar(campo, valor, campo2)
+            elif campo == 'edad':
+                valor = input(f'Ingrese el nuevo valor para el campo {campo} selecionado\n')
+                actualizar(campo, valor, campo2)
+            elif campo == 'peso':
+                valor = input(f'Ingrese el nuevo valor para el campo {campo} selecionado\n')
+                actualizar(campo, valor, campo2)
+            elif campo == 'talla':
+                valor = input(f'Ingrese el nuevo valor para el campo {campo} selecionado\n')
+                actualizar(campo, valor, campo2)
+            else:
+                pass
+   
         elif elegido == 4:
-            pass
+            campo2 = int(input(f'Ingrese el ID del paciente que desea eliminar\n'))
+            borrar(campo2)
         elif elegido == 5: 
-            pass
+            campo = (input(f'Elija la columna para buscar(id, apellido, nombre)\n')).lower()
+            if campo == 'id':
+                valor = input(f'Ingrese el ID\n')
+                valor2 = f"SELECT * FROM pacientes WHERE id = '{valor}'"
+                buscar(valor2)
+            elif campo == 'apellido':
+                valor = input(f'Ingrese el apellido\n')
+                valor2 = f"SELECT * FROM pacientes WHERE apellido like '{valor}'"
+                buscar(valor2)
+            elif campo == 'nombre':
+                valor = input(f'Ingrese el nombre\n')
+                valor2 = f"SELECT * FROM pacientes WHERE nombre like '{valor}'"
+                buscar(valor2)
         elif elegido == 6:
-            pass
+            print('Hasta Luego!\n')
+            i = False
         else:
             pass
     
     #def seguir(self):
         
 
-    
+  
 
-
-
-p1 = paciente('Niz', 'Maximiliano', 33, 70, 1.65)
-p2 = paciente('Perez', 'Juan', 30, 60, 1.65)
-p3 = paciente('Romero', 'Maria', 20, 68, 1.70)
 p4 = CMR(base_datos)
+
 p4.informacion()
 menu_principal()
 p4.opcion()
@@ -196,6 +223,7 @@ Quiere realizar otra operacion?
         menu_principal()
         p4.opcion()
     elif sesigue == 2:
+        print(f'Hasta Luego!\n')
         i = False
 
 
