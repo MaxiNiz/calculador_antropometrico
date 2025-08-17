@@ -141,9 +141,7 @@ class CMR():
         self.conn = None
         self.cursor = None
     def informacion(self):
-        print(f"""                        -----------------------------------
-                        BIENVENIDO AL CONTROL NUTRICIONAL
-                        -----------------------------------\n""")
+        
         last_name = input(f'Ingrese el apellido del paciente\n')
         name = input(f'ingrese el nombre del paciente\n')
         years_old = int(input(f'Ingrese la edad del paciente\n'))
@@ -157,7 +155,9 @@ class CMR():
         
     def opcion(self):
         elegido = int(input(''))
+        
         if elegido == 1:
+            p4.informacion()
             paciente.estado_nutricional(paciente)
         elif elegido == 2:
             cargar_datos(paciente)
@@ -211,10 +211,16 @@ class CMR():
   
 
 p4 = CMR(base_datos)
+crear_tabla()
+print(f"""    -----------------------------------
+      BIENVENIDO AL CONTROL NUTRICIONAL
+    -----------------------------------\n""")
 
-p4.informacion()
 menu_principal()
 p4.opcion()
+
+
+
 while i == True:
     sesigue = int(input(f"""
 Quiere realizar otra operacion? 
